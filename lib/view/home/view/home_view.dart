@@ -24,27 +24,35 @@ class HomeView extends StatelessWidget {
       builder: (context, viewModel) {
         return MarvelBaseWidget(
           hideAppBar: true,
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://i.pinimg.com/originals/30/97/2c/30972cd9960912d77cab2b52e878ac2f.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    _renderTopTitle(context),
-                    _renderMarvelCharacterList(viewModel),
-                  ],
-                ),
-                _renderLoadingWidget(context, viewModel),
-              ],
-            ),
-          ),
+          child: _renderBody(context, viewModel),
         );
       },
+    );
+  }
+
+  Widget _renderBody(BuildContext context, HomeViewModel viewModel) {
+    return Container(
+      decoration: _renderBackgroundDecoration(),
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              _renderTopTitle(context),
+              _renderMarvelCharacterList(viewModel),
+            ],
+          ),
+          _renderLoadingWidget(context, viewModel),
+        ],
+      ),
+    );
+  }
+
+  BoxDecoration _renderBackgroundDecoration() {
+    return const BoxDecoration(
+      image: DecorationImage(
+        image: NetworkImage("https://i.pinimg.com/originals/30/97/2c/30972cd9960912d77cab2b52e878ac2f.jpg"),
+        fit: BoxFit.cover,
+      ),
     );
   }
 
