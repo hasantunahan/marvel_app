@@ -5,8 +5,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:marvel_api/_product/config/navigation/custom_navigation_route.dart';
 import 'package:marvel_api/_product/constant/assets.dart';
 import 'package:marvel_api/_product/constant/padding.dart';
+import 'package:marvel_api/_product/constant/routes_path.dart';
 import 'package:marvel_api/_product/widget/marve_base_widget/marvel_base_widget.dart';
 import 'package:marvel_api/core/base/view/base_view.dart';
+import 'package:marvel_api/core/config/navigation/arguments.dart';
+import 'package:marvel_api/core/config/navigation/navigation_service.dart';
 import 'package:marvel_api/core/extension/context_extension.dart';
 import 'package:marvel_api/core/widgets/delayed_widget/delayed_widget.dart';
 import 'package:marvel_api/generated/language_extension.dart';
@@ -105,8 +108,12 @@ class HomeView extends StatelessWidget {
                     viewModel,
                     index,
                     context,
-                    () {
-                      log(viewModel.characterList![index].name!);
+                    () async {
+                      await NavigationService.instance.navigateTo(
+                          path: RoutesPath.character_detail,
+                          args: NavigationArguments(
+                            data: viewModel.characterList![index],
+                          ));
                     },
                   );
                 },

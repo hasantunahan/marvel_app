@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:marvel_api/_product/constant/assets.dart';
 import 'package:marvel_api/core/extension/context_extension.dart';
 
 class MarvelBaseWidget extends StatelessWidget {
