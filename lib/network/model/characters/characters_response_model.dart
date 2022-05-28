@@ -9,25 +9,16 @@ class CharacterResponseModel {
   String? description;
   String? modified;
   Thumbnail? thumbnail;
-  String? resourceURI;
   Comics? comics;
-  Comics? series;
-  Comics? stories;
-  Comics? events;
-  List<Urls>? urls;
 
-  CharacterResponseModel(
-      {this.id,
-        this.name,
-        this.description,
-        this.modified,
-        this.thumbnail,
-        this.resourceURI,
-        this.comics,
-        this.series,
-        this.stories,
-        this.events,
-        this.urls});
+  CharacterResponseModel({
+    this.id,
+    this.name,
+    this.description,
+    this.modified,
+    this.thumbnail,
+    this.comics,
+  });
 
   factory CharacterResponseModel.fromJson(Map<String, dynamic> json) => _$CharacterResponseModelFromJson(json);
 
@@ -44,7 +35,6 @@ class Thumbnail {
   factory Thumbnail.fromJson(Map<String, dynamic> json) => _$ThumbnailFromJson(json);
 
   Map<String, dynamic> toJson() => _$ThumbnailToJson(this);
-
 }
 
 @JsonSerializable(includeIfNull: false)
@@ -72,17 +62,4 @@ class Items {
   factory Items.fromJson(Map<String, dynamic> json) => _$ItemsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ItemsToJson(this);
-}
-
-@JsonSerializable(includeIfNull: false)
-class Urls {
-  String? type;
-  String? url;
-
-  Urls({this.type, this.url});
-
-  factory Urls.fromJson(Map<String, dynamic> json) => _$UrlsFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UrlsToJson(this);
-
 }

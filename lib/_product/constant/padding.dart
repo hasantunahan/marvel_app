@@ -9,6 +9,9 @@ class AppPadding {
   }
 
   double get mediumValue => 16.0;
+  double get lowValue => 8.0;
 
   EdgeInsets get allPaddingMedium => EdgeInsets.all(mediumValue);
+  EdgeInsets get allPaddingLow => EdgeInsets.all(lowValue);
+
 }
