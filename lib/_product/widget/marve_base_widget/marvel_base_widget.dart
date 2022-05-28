@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marvel_api/_product/constant/assets.dart';
 import 'package:marvel_api/core/extension/context_extension.dart';
 
 class MarvelBaseWidget extends StatelessWidget {
@@ -22,10 +23,12 @@ class MarvelBaseWidget extends StatelessWidget {
 
   AppBar _renderAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: context.theme.colorScheme.primary,
+      backgroundColor: context.theme.colorScheme.background,
+      elevation: 0,
+      centerTitle: false,
       title: Text(
         title,
-        style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+        style: TextStyle(color: context.theme.colorScheme.primary, fontSize: 16, fontWeight: FontWeight.bold),
       ),
     );
   }

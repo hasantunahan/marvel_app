@@ -69,6 +69,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Choose your marvel character`
+  String get choose_character {
+    return Intl.message(
+      'Choose your marvel character',
+      name: 'choose_character',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

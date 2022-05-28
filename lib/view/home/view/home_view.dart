@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:marvel_api/_product/config/navigation/custom_navigation_route.dart';
+import 'package:marvel_api/_product/constant/assets.dart';
 import 'package:marvel_api/_product/constant/padding.dart';
 import 'package:marvel_api/_product/widget/marve_base_widget/marvel_base_widget.dart';
 import 'package:marvel_api/core/base/view/base_view.dart';
@@ -22,15 +23,54 @@ class HomeView extends StatelessWidget {
       routeObserver: CustomNavigationRouter.instance.routeObserver,
       builder: (context, viewModel) {
         return MarvelBaseWidget(
-          title: context.lang.marvel_character_list,
-          child: Stack(
-            children: [
-              _renderMarvelCharacterList(viewModel),
-              _renderLoadingWidget(context, viewModel),
-            ],
+          hideAppBar: true,
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage("https://i.pinimg.com/originals/30/97/2c/30972cd9960912d77cab2b52e878ac2f.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    _renderTopTitle(context),
+                    _renderMarvelCharacterList(viewModel),
+                  ],
+                ),
+                _renderLoadingWidget(context, viewModel),
+              ],
+            ),
           ),
         );
       },
+    );
+  }
+
+  Widget _renderTopTitle(BuildContext context) {
+    return SafeArea(
+      bottom: false,
+      child: Container(
+        width: context.width,
+        padding: AppPadding.instance.symmetricPaddingHorizontalMedium,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              Assets.instance.logo,
+              width: 80,
+              height: 40,
+            ),
+            const SizedBox(height: 16.0),
+            Text(
+              context.lang.choose_character,
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 16.0),
+          ],
+        ),
+      ),
     );
   }
 
@@ -40,26 +80,29 @@ class HomeView extends StatelessWidget {
         if (viewModel.characterList == null) {
           return const SizedBox();
         } else {
-          return DelayedDisplay(
-            child: GridView.builder(
-              controller: viewModel.scrollController,
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 300,
-                childAspectRatio: 40 / 60,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
+          return Flexible(
+            child: DelayedDisplay(
+              child: GridView.builder(
+                padding: EdgeInsets.zero,
+                controller: viewModel.scrollController,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: context.width * .33,
+                  childAspectRatio: 40 / 60,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: viewModel.characterList!.length,
+                itemBuilder: (context, index) {
+                  return _renderCharacterWidget(
+                    viewModel,
+                    index,
+                    context,
+                    () {
+                      log(viewModel.characterList![index].name!);
+                    },
+                  );
+                },
               ),
-              itemCount: viewModel.characterList!.length,
-              itemBuilder: (context, index) {
-                return _renderCharacterWidget(
-                  viewModel,
-                  index,
-                  context,
-                  () {
-                    log(viewModel.characterList![index].name!);
-                  },
-                );
-              },
             ),
           );
         }
@@ -76,39 +119,14 @@ class HomeView extends StatelessWidget {
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(16.0)),
             child: Container(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Image.network(
-                      "${viewModel.characterList![index].thumbnail!.path!}/portrait_xlarge.jpg",
-                      height: context.width * .6,
-                      width: context.width * .5,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.grey.withOpacity(0.2),
-                          height: context.width * .6,
-                        );
-                      },
-                    ),
+                    child: _renderCharacterImage(viewModel, index, context),
                   ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: AppPadding.instance.allPaddingLow,
-                          child: Text(
-                            viewModel.characterList![index].name ?? "",
-                            maxLines: 5,
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  _renderCharacterName(viewModel, index),
                 ],
               ),
             ),
@@ -118,13 +136,45 @@ class HomeView extends StatelessWidget {
     );
   }
 
+  Row _renderCharacterName(HomeViewModel viewModel, int index) {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: AppPadding.instance.allPaddingLow,
+            child: Text(
+              viewModel.characterList![index].name ?? "",
+              maxLines: 5,
+              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Image _renderCharacterImage(HomeViewModel viewModel, int index, BuildContext context) {
+    return Image.network(
+      "${viewModel.characterList![index].thumbnail!.path!}/portrait_xlarge.jpg",
+      height: context.width * .6,
+      width: context.width * .5,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Container(
+          color: Colors.grey.withOpacity(0.2),
+          height: context.width * .6,
+        );
+      },
+    );
+  }
+
   Widget _renderLoadingWidget(BuildContext context, HomeViewModel viewModel) {
     return Observer(builder: (context) {
       return Visibility(
         visible: viewModel.isLoading,
         child: Container(
           width: context.width,
-          color: context.theme.colorScheme.secondary.withOpacity(0.15),
+          color: context.theme.colorScheme.background.withOpacity(0.15),
           child: Padding(
             padding: AppPadding.instance.allPaddingMedium,
             child: const Center(
