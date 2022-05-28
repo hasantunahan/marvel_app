@@ -42,6 +42,7 @@ class HomeView extends StatelessWidget {
         } else {
           return DelayedDisplay(
             child: GridView.builder(
+              controller: viewModel.scrollController,
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 300,
                 childAspectRatio: 40 / 60,
