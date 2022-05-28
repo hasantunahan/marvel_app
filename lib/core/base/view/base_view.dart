@@ -9,7 +9,6 @@ class BaseView<T extends BaseViewModel> extends StatefulWidget {
   final Function(T model)? didPopNext;
   final Function(T viewmodel, AppLifecycleState state)? onAppLifecycleChanged;
   final bool enableFocusControl;
-  final bool isLoading;
   final bool fromTest;
   final RouteObserver<ModalRoute<void>> routeObserver;
 
@@ -22,7 +21,6 @@ class BaseView<T extends BaseViewModel> extends StatefulWidget {
     this.didPopNext,
     this.onAppLifecycleChanged,
     this.enableFocusControl = true,
-    this.isLoading = false,
     this.onBackAction,
     this.fromTest = false,
   }) : super(key: key);
@@ -79,40 +77,10 @@ class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> with Wi
     }
   }
 
-  Widget _willPopScopeWrapper({required Widget child}) {
-    if (widget.onBackAction == null) {
-      return child;
-    } else {
-      return WillPopScope(
-        child: child,
-        onWillPop: () async {
-          return widget.onBackAction != null ? widget.onBackAction!(widget.viewModel) : Future.value(true);
-        },
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    Widget child = widget.builder(context, widget.viewModel);
+    Widget _child = widget.builder(context, widget.viewModel);
 
-    return _willPopScopeWrapper(
-      child: Stack(
-        children: [
-          GestureDetector(
-            onTap: () {
-              if (widget.enableFocusControl) {
-                FocusScope.of(context).requestFocus(FocusNode());
-              }
-            },
-            child: child,
-          ),
-          Visibility(
-            visible: widget.isLoading,
-            child: const CircularProgressIndicator.adaptive(),
-          )
-        ],
-      ),
-    );
+    return _child;
   }
 }

@@ -59,6 +59,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Character List`
+  String get marvel_character_list {
+    return Intl.message(
+      'Character List',
+      name: 'marvel_character_list',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

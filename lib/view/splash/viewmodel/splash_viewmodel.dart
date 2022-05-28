@@ -15,7 +15,7 @@ abstract class _SplashViewModelBase with Store, BaseViewModel {
 
   @override
   Future<void> init() async {
-    final timer = Timer(const Duration(milliseconds: 3350), () {
+    await Future.delayed(const Duration(milliseconds: 3350), () {
       NavigationService.instance.navigateToReset(path: RoutesPath.home);
     });
   }

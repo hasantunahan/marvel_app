@@ -23,7 +23,10 @@ class MarvelBaseWidget extends StatelessWidget {
   AppBar _renderAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: context.theme.colorScheme.primary,
-      title: Text(title),
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }

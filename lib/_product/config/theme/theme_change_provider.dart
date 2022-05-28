@@ -11,11 +11,11 @@ class MarvelTheme {
 
   static ColorScheme _colorScheme() {
     return const ColorScheme(
-      primary: Color(0xFFF56060),
+      primary: Color(0xFFe23636),
       primaryVariant: Color(0xFF4ACBD2),
       secondary: Color(0xFFD99970),
       secondaryVariant: Color(0xFFFAFBFB),
-      background: Color(0xFF636363),
+      background: Color(0xFFFFFFFF),
       surface: Color(0xFF808080),
       onBackground: Colors.white,
       error: Colors.red,

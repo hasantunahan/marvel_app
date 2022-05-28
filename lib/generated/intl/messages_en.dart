@@ -22,6 +22,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "marvel_character_list":
+            MessageLookupByLibrary.simpleMessage("Character List"),
         "view_page_not_found":
             MessageLookupByLibrary.simpleMessage("Page Not Found")
       };
