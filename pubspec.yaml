@@ -21,8 +21,6 @@ dependencies:
   # JSON Serializer
   json_annotation: ^4.4.0
   json_serializable: ^6.1.5
-  #cache
-  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:
