@@ -50,7 +50,6 @@ abstract class _HomeViewModelBase with Store, BaseViewModel {
     totalCount = res.data!.total!;
     characterList = [...?characterList, ...res.data!.results!];
     changeLoading();
-    log("ok");
   }
 
   @override

@@ -57,7 +57,6 @@ abstract class _CharacterDetailViewModelBase with Store, BaseViewModel {
       comicList = [];
     }
     changeLoading();
-    log("details ok");
   }
 
   @override
