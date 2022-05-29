@@ -5,4 +5,6 @@ class ApiPath {
   static const String authParams = "?ts=1&apikey=$_apiKey&hash=$_hash";
 
   static const String character = "characters";
+  static const String comics = "comics";
+
 }

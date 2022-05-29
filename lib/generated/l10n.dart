@@ -79,6 +79,36 @@ class S {
       args: [],
     );
   }
+
+  /// `He/She has not appeared in any comics after 2005.`
+  String get after_2005_empty {
+    return Intl.message(
+      'He/She has not appeared in any comics after 2005.',
+      name: 'after_2005_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Comics`
+  String get comics {
+    return Intl.message(
+      'Comics',
+      name: 'comics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description not found..`
+  String get description_not_found {
+    return Intl.message(
+      'Description not found..',
+      name: 'description_not_found',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

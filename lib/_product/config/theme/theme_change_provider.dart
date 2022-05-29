@@ -16,7 +16,7 @@ class MarvelTheme {
       secondary: Color(0xFFD99970),
       secondaryVariant: Color(0xFFFAFBFB),
       background: Color(0xFFFFFFFF),
-      surface: Color(0xFF808080),
+      surface: Color(0xFF111111),
       onBackground: Colors.white,
       error: Colors.red,
       onError: Colors.redAccent,

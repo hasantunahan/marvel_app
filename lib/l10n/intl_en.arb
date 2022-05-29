@@ -1,5 +1,8 @@
 {
   "view_page_not_found" : "Page Not Found",
   "marvel_character_list" : "Character List",
-  "choose_character" : "Choose your marvel character"
+  "choose_character" : "Choose your marvel character",
+  "after_2005_empty" : "He/She has not appeared in any comics after 2005.",
+  "comics" : "Comics",
+  "description_not_found" : "Description not found.."
 }

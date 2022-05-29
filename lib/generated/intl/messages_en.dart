@@ -22,8 +22,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "after_2005_empty": MessageLookupByLibrary.simpleMessage(
+            "He/She has not appeared in any comics after 2005."),
         "choose_character": MessageLookupByLibrary.simpleMessage(
             "Choose your marvel character"),
+        "comics": MessageLookupByLibrary.simpleMessage("Comics"),
+        "description_not_found":
+            MessageLookupByLibrary.simpleMessage("Description not found.."),
         "marvel_character_list":
             MessageLookupByLibrary.simpleMessage("Character List"),
         "view_page_not_found":

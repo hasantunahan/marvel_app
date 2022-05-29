@@ -15,4 +15,5 @@ class AppPadding {
   EdgeInsets get allPaddingLow => EdgeInsets.all(lowValue);
 
   EdgeInsets get symmetricPaddingHorizontalMedium => EdgeInsets.symmetric(horizontal: mediumValue);
+  EdgeInsets get symmetricPaddingVerticalLow => EdgeInsets.symmetric(vertical: lowValue);
 }
