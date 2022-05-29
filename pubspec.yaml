@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   # State Management
-  provider: ^6.0.2
   mobx: ^2.0.6+1
   mobx_codegen: ^2.0.5+2
   flutter_mobx: ^2.0.4
