@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:marvel_api/_product/config/navigation/custom_navigation_route.dart';
+import 'package:marvel_api/_product/constant/animation_offset.dart';
 import 'package:marvel_api/_product/constant/padding.dart';
 import 'package:marvel_api/_product/widget/marve_base_widget/marvel_base_widget.dart';
 import 'package:marvel_api/core/base/view/base_view.dart';
 import 'package:marvel_api/core/config/navigation/arguments.dart';
 import 'package:marvel_api/core/config/navigation/navigation_service.dart';
 import 'package:marvel_api/core/extension/context_extension.dart';
+import 'package:marvel_api/core/widgets/delayed_widget/delayed_widget.dart';
 import 'package:marvel_api/generated/language_extension.dart';
 import 'package:marvel_api/network/model/characters/characters_response_model.dart';
 import 'package:marvel_api/view/character_detail/viewmodel/character_detail_viewmodel.dart';
@@ -99,60 +101,63 @@ class _CharacterDetailViewState extends State<CharacterDetailView> {
     });
   }
 
-  ListView _renderComicList(CharacterDetailViewModel viewModel) {
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      itemCount: viewModel.comicList!.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: AppPadding.instance.symmetricPaddingVerticalLow,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(
-                "${viewModel.comicList![index].thumbnail!.path!}/portrait_xlarge.jpg",
-                height: context.width * .21,
-                width: context.width * .14,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey.withOpacity(0.2),
-                    height: context.width * .21,
-                  );
-                },
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      viewModel.comicList![index].title ?? "",
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      viewModel.comicList![index].description == null
-                          ? context.lang.description_not_found
-                          : viewModel.comicList![index].description! == ""
-                              ? context.lang.description_not_found
-                              : viewModel.comicList![index].description!,
-                    ),
-                  ],
+  Widget _renderComicList(CharacterDetailViewModel viewModel) {
+    return DelayedDisplay(
+      slidingBeginOffset: AnimationPosition.BOTTOM.animate(),
+      child: ListView.builder(
+        padding: EdgeInsets.zero,
+        itemCount: viewModel.comicList!.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: AppPadding.instance.symmetricPaddingVerticalLow,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.network(
+                  "${viewModel.comicList![index].thumbnail!.path!}/portrait_xlarge.jpg",
+                  height: context.width * .21,
+                  width: context.width * .14,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey.withOpacity(0.2),
+                      height: context.width * .21,
+                    );
+                  },
                 ),
-              ),
-            ],
-          ),
-        );
-      },
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        viewModel.comicList![index].title ?? "",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        viewModel.comicList![index].description == null
+                            ? context.lang.description_not_found
+                            : viewModel.comicList![index].description! == ""
+                                ? context.lang.description_not_found
+                                : viewModel.comicList![index].description!,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
-  Padding _renderComicsTitle(BuildContext context) {
+  Widget _renderComicsTitle(BuildContext context) {
     return Padding(
       padding: AppPadding.instance.allPaddingMedium,
       child: Row(
@@ -170,30 +175,36 @@ class _CharacterDetailViewState extends State<CharacterDetailView> {
     );
   }
 
-  Padding _renderCharacterDescription() {
-    return Padding(
-      padding: AppPadding.instance.symmetricPaddingHorizontalMedium,
-      child: Text(
-        _args.description == null
-            ? context.lang.description_not_found
-            : _args.description! == ""
-                ? context.lang.description_not_found
-                : _args.description!,
-        style: const TextStyle(
-          fontSize: 13,
-          letterSpacing: 0.24,
+  Widget _renderCharacterDescription() {
+    return DelayedDisplay(
+      slidingBeginOffset: AnimationPosition.LEFT.animate(),
+      child: Padding(
+        padding: AppPadding.instance.symmetricPaddingHorizontalMedium,
+        child: Text(
+          _args.description == null
+              ? context.lang.description_not_found
+              : _args.description! == ""
+                  ? context.lang.description_not_found
+                  : _args.description!,
+          style: const TextStyle(
+            fontSize: 13,
+            letterSpacing: 0.24,
+          ),
         ),
       ),
     );
   }
 
-  Padding _renderCharacterName(BuildContext context) {
-    return Padding(
-      padding: AppPadding.instance.allPaddingMedium,
-      child: Text(
-        _args.name!,
-        style: context.theme.textTheme.headline5
-            ?.copyWith(fontWeight: FontWeight.w600, color: Colors.black, letterSpacing: 0.24),
+  Widget _renderCharacterName(BuildContext context) {
+    return DelayedDisplay(
+      slidingBeginOffset: AnimationPosition.LEFT.animate(),
+      child: Padding(
+        padding: AppPadding.instance.allPaddingMedium,
+        child: Text(
+          _args.name!,
+          style: context.theme.textTheme.headline5
+              ?.copyWith(fontWeight: FontWeight.w600, color: Colors.black, letterSpacing: 0.24),
+        ),
       ),
     );
   }
@@ -201,17 +212,21 @@ class _CharacterDetailViewState extends State<CharacterDetailView> {
   Widget _renderTopImage(BuildContext context) {
     return Stack(
       children: [
-        Image.network(
-          "${_args.thumbnail!.path}/landscape_incredible.jpg",
-          height: context.width * .5625,
-          fit: BoxFit.contain,
-          width: context.width,
-          errorBuilder: (context, error, stackTrace) {
-            return Container(
-              color: Colors.grey.withOpacity(0.2),
-              height: context.width,
-            );
-          },
+        DelayedDisplay(
+          slidingBeginOffset: AnimationPosition.LEFT.animate(),
+          slidingCurve: Curves.linear,
+          child: Image.network(
+            "${_args.thumbnail!.path}/landscape_incredible.jpg",
+            height: context.width * .5625,
+            fit: BoxFit.contain,
+            width: context.width,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                color: Colors.grey.withOpacity(0.2),
+                height: context.width* .5625,
+              );
+            },
+          ),
         ),
         Positioned(
           top: MediaQuery.of(context).viewInsets.top + 44,

@@ -48,6 +48,8 @@ abstract class _CharacterDetailViewModelBase with Store, BaseViewModel {
           log("${_date.year.toString()} // ${element.title}");
           if (_date.year >= _COMPARATOR_DATE) {
             comicList = [...?comicList, element];
+          } else {
+            comicList = [...?comicList];
           }
         }
       }
