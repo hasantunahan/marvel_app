@@ -1,4 +1,3 @@
-import 'package:marvel_api/network/model/characters/characters_response_model.dart';
 import 'package:marvel_api/network/model/comics/comics_response_model.dart';
 import 'package:marvel_api/network/response/pagination_model.dart';
 import 'package:marvel_api/network/response/response_model.dart';

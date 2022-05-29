@@ -6,45 +6,32 @@ class BaseView<T extends BaseViewModel> extends StatefulWidget {
   final Widget Function(BuildContext context, T value) builder;
   final VoidCallback? onDispose;
   final Future<bool> Function(T viewmodel)? onBackAction;
-  final Function(T model)? didPopNext;
-  final Function(T viewmodel, AppLifecycleState state)? onAppLifecycleChanged;
-  final bool enableFocusControl;
-  final bool fromTest;
-  final RouteObserver<ModalRoute<void>> routeObserver;
 
   const BaseView({
     required this.viewModel,
     required this.builder,
-    required this.routeObserver,
     Key? key,
     this.onDispose,
-    this.didPopNext,
-    this.onAppLifecycleChanged,
-    this.enableFocusControl = true,
     this.onBackAction,
-    this.fromTest = false,
   }) : super(key: key);
 
   @override
   _BaseViewState<T> createState() => _BaseViewState<T>();
 }
 
-class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> with WidgetsBindingObserver, RouteAware {
+class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       widget.viewModel.setContext(context);
-      if (!widget.fromTest) {
-        widget.viewModel.init();
-      }
+      widget.viewModel.init();
     });
   }
 
   @override
   void dispose() {
-    widget.routeObserver.unsubscribe(this);
     if (widget.onDispose != null) {
       widget.onDispose!.call();
     }
@@ -61,26 +48,11 @@ class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> with Wi
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    widget.routeObserver.subscribe(this, ModalRoute.of(context)!);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    widget.onAppLifecycleChanged?.call(widget.viewModel, state);
-  }
-
-  @override
-  void didPopNext() {
-    super.didPopNext();
-    if (widget.didPopNext != null) {
-      widget.didPopNext!.call(widget.viewModel);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     Widget _child = widget.builder(context, widget.viewModel);
-
     return _child;
   }
 }

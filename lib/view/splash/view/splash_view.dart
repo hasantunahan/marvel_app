@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:marvel_api/_product/config/navigation/custom_navigation_route.dart';
 import 'package:marvel_api/_product/constant/animation_offset.dart';
 import 'package:marvel_api/_product/constant/assets.dart';
 import 'package:marvel_api/_product/widget/marve_base_widget/marvel_base_widget.dart';
@@ -19,7 +18,6 @@ class SplashView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<SplashViewModel>(
       viewModel: _splashViewModel,
-      routeObserver: CustomNavigationRouter.instance.routeObserver,
       builder: (context, value) {
         return MarvelBaseWidget(
           hideAppBar: true,

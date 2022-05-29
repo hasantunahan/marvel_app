@@ -13,8 +13,6 @@ class CustomNavigationRouter {
     return _instance!;
   }
 
-  final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
-
   Widget routeGenerator(RouteSettings settings) {
     switch (settings.name) {
       case RoutesPath.splash:

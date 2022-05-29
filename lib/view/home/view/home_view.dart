@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:marvel_api/_product/config/navigation/custom_navigation_route.dart';
 import 'package:marvel_api/_product/constant/assets.dart';
 import 'package:marvel_api/_product/constant/padding.dart';
 import 'package:marvel_api/_product/constant/routes_path.dart';
@@ -23,7 +20,6 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(
       viewModel: _homeViewModel,
-      routeObserver: CustomNavigationRouter.instance.routeObserver,
       builder: (context, viewModel) {
         return MarvelBaseWidget(
           hideAppBar: true,

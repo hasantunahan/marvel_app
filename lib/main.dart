@@ -30,9 +30,6 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) =>
           NavigationRouter.onGenerateRoute(settings, CustomNavigationRouter.instance.routeGenerator),
       navigatorKey: NavigationService.instance.navigatorKey,
-      navigatorObservers: [
-        CustomNavigationRouter.instance.routeObserver,
-      ],
     );
   }
 }

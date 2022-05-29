@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:marvel_api/_product/config/navigation/custom_navigation_route.dart';
 import 'package:marvel_api/_product/constant/animation_offset.dart';
 import 'package:marvel_api/_product/constant/padding.dart';
 import 'package:marvel_api/_product/widget/marve_base_widget/marvel_base_widget.dart';
@@ -46,7 +45,6 @@ class _CharacterDetailViewState extends State<CharacterDetailView> {
         NavigationService.instance.back();
         return Future.value(true);
       },
-      routeObserver: CustomNavigationRouter.instance.routeObserver,
       builder: (context, viewModel) {
         return MarvelBaseWidget(
           hideAppBar: true,
